@@ -67,6 +67,8 @@ var createTaskEl = function(taskDataObj) {
 
     tasks.push(taskDataObj)
 
+  saveTasks()
+
     taskIdCounter++;
 
  
@@ -149,6 +151,8 @@ var deleteTask = function(taskId){
         }
     }// reassign task array to be the samw as updatedtaskarr
     tasks = updatedTaskArr;
+
+    saveTasks();
 };
 
 var editTask = function(taskId) {
@@ -185,7 +189,7 @@ for(var i=0; i < tasks.length ; i++ ){
         tasks[i].type = taskType;
     }
 };
-
+saveTasks()
 alert("Task Updated!");
 
 formEl.removeAttribute("data-task-id");
@@ -216,10 +220,14 @@ var taskStatusChangeHandler = function(event){
         if(tasks[i].id === parseInt(taskId)){
             tasks[i].status = statusValue;
         }
-    }console.log(tasks);
+
+
+    saveTasks()
 };
 
-
+var saveTasks = function(){
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+};
 
 formEl.addEventListener("submit", taskFormHandler);
 pageContentEl.addEventListener("click", taskButtonHandler);
